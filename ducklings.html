@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Мир Утят 🐥</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --yellow:   #FFD95A;
+    --yellow-lt:#FFF5B8;
+    --green-lt: #C8EDD6;
+    --green:    #8ED4A4;
+    --blue-lt:  #B8DEFF;
+    --blue:     #7EC4F0;
+    --white:    #FAFFF8;
+    --text:     #4A6741;
+    --text-lt:  #7A9E74;
+    --shadow:   rgba(100,180,140,0.18);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Quicksand', sans-serif;
+    background: var(--white);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ═══════════════════════════════
+     HEADER / NAV
+  ═══════════════════════════════ */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(250,255,248,0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 2px solid var(--green-lt);
+    padding: 0 2rem;
+  }
+
+  nav {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 70px;
+  }
+
+  .logo {
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.6rem; font-weight: 900;
+    color: var(--text);
+    display: flex; align-items: center; gap: 8px;
+    text-decoration: none;
+  }
+  .logo span { font-size: 1.8rem; }
+
+  .nav-links { display: flex; gap: 8px; list-style: none; }
+
+  /* NAV BUTTON with duck peek */
+  .nav-links li { position: relative; }
+
+  .nav-links a {
+    display: block;
+    padding: 8px 16px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700; font-size: 0.88rem;
+    color: var(--text);
+    text-decoration: none;
+    background: var(--yellow-lt);
+    border: 2px solid var(--yellow);
+    border-radius: 22px;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    position: relative; z-index: 2;
+  }
+
+  /* Duck SVG that peeks */
+  .duck-peek {
+    position: absolute;
+    bottom: calc(100% - 4px);
+    left: 50%;
+    transform: translateX(-50%) translateY(30px) scale(0.7);
+    opacity: 0;
+    transition: transform 0.32s cubic-bezier(.34,1.56,.64,1), opacity 0.22s;
+    pointer-events: none;
+    z-index: 1;
+    width: 48px;
+  }
+
+  .nav-links li:hover .duck-peek {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+  .nav-links li:hover a {
+    background: var(--yellow);
+    transform: translateY(3px);
+    box-shadow: 0 6px 18px var(--shadow);
+  }
+
+  /* ═══════════════════════════════
+     HERO (верхняя часть)
+  ═══════════════════════════════ */
+  .hero {
+    position: relative;
+    min-height: 92vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    overflow: hidden;
+    padding: 4rem 2rem 6rem;
+  }
+
+  /* Sky gradient */
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(170deg,
+      #D6EFFF 0%,
+      #C8EDD6 40%,
+      #FFF5B8 100%
+    );
+    z-index: 0;
+  }
+
+  /* Animated clouds */
+  .clouds { position: absolute; top: 0; left: 0; width: 100%; height: 60%; z-index: 1; pointer-events: none; }
+
+  .cloud {
+    position: absolute;
+    background: rgba(255,255,255,0.82);
+    border-radius: 50px;
+    filter: blur(2px);
+  }
+  .cloud::before, .cloud::after {
+    content: ''; position: absolute;
+    background: rgba(255,255,255,0.82);
+    border-radius: 50%;
+  }
+  .c1 { width:140px;height:38px;top:12%;left:-140px; animation: cloudFloat 22s linear infinite; }
+  .c1::before{width:70px;height:70px;top:-30px;left:20px;}
+  .c1::after{width:50px;height:50px;top:-22px;left:60px;}
+  .c2 { width:100px;height:28px;top:22%;left:-100px; animation: cloudFloat 30s linear infinite 8s; }
+  .c2::before{width:55px;height:55px;top:-25px;left:15px;}
+  .c3 { width:180px;height:44px;top:6%;left:-180px; animation: cloudFloat 26s linear infinite 14s; }
+  .c3::before{width:80px;height:80px;top:-36px;left:24px;}
+  .c3::after{width:60px;height:60px;top:-28px;left:80px;}
+
+  @keyframes cloudFloat { to { left: 110%; } }
+
+  /* Lake SVG scene */
+  .lake-scene {
+    position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative; z-index: 3;
+    text-align: center;
+    max-width: 700px;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: var(--yellow);
+    color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800; font-size: 0.85rem;
+    padding: 5px 18px;
+    border-radius: 20px;
+    letter-spacing: 0.04em;
+    margin-bottom: 1.2rem;
+    box-shadow: 0 3px 12px rgba(255,217,90,0.4);
+  }
+
+  .hero h1 {
+    font-family: 'Nunito', sans-serif;
+    font-size: clamp(2.8rem, 6vw, 4.4rem);
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: #3A8C5C;
+    display: block;
+  }
+
+  .hero p {
+    font-size: 1.1rem; line-height: 1.7;
+    color: var(--text-lt);
+    max-width: 480px; margin: 0 auto 2rem;
+  }
+
+  .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: var(--yellow);
+    border: none; border-radius: 30px;
+    padding: 14px 32px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800; font-size: 1rem;
+    color: var(--text);
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(255,217,90,0.45);
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(255,217,90,0.55); }
+
+  .btn-secondary {
+    background: rgba(255,255,255,0.7);
+    border: 2px solid var(--blue);
+    border-radius: 30px; padding: 14px 32px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800; font-size: 1rem;
+    color: var(--blue);
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-secondary:hover { background: var(--blue-lt); transform: translateY(-3px); }
+
+  /* Floating ducklings row */
+  .floating-ducks {
+    position: absolute; bottom: 100px; z-index: 4;
+    display: flex; gap: 28px;
+    animation: bobRow 3s ease-in-out infinite;
+  }
+  @keyframes bobRow { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+  .mini-duck { width: 54px; animation: rotate-bob 2.8s ease-in-out infinite; }
+  .mini-duck:nth-child(2) { animation-delay: 0.4s; width: 46px; }
+  .mini-duck:nth-child(3) { animation-delay: 0.8s; width: 58px; }
+  @keyframes rotate-bob { 0%,100%{transform:rotate(-5deg)} 50%{transform:rotate(5deg)} }
+
+  /* ═══════════════════════════════
+     MIDDLE — cards section
+  ═══════════════════════════════ */
+  .section-middle {
+    background: linear-gradient(180deg, var(--green-lt) 0%, var(--white) 100%);
+    padding: 5rem 2rem;
+  }
+
+  .section-title {
+    text-align: center;
+    font-family: 'Nunito', sans-serif;
+    font-size: 2rem; font-weight: 900;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+  .section-sub {
+    text-align: center; color: var(--text-lt);
+    font-size: 1rem; margin-bottom: 3rem;
+  }
+  .section-sub span { color: var(--yellow); font-size: 1.2rem; }
+
+  .cards-grid {
+    max-width: 1100px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 24px;
+  }
+
+  .duck-card {
+    background: rgba(255,255,255,0.85);
+    border-radius: 24px;
+    padding: 28px 24px 24px;
+    border: 2px solid var(--green-lt);
+    box-shadow: 0 6px 24px var(--shadow);
+    transition: transform 0.25s, box-shadow 0.25s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .duck-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 6px;
+    background: var(--yellow);
+    border-radius: 24px 24px 0 0;
+  }
+  .duck-card:nth-child(2)::before { background: var(--blue); }
+  .duck-card:nth-child(3)::before { background: var(--green); }
+  .duck-card:nth-child(4)::before { background: #FFB3C6; }
+  .duck-card:nth-child(5)::before { background: var(--yellow); }
+  .duck-card:nth-child(6)::before { background: var(--blue); }
+
+  .duck-card:hover {
+    transform: translateY(-8px) rotate(-1deg);
+    box-shadow: 0 18px 40px var(--shadow);
+  }
+
+  .duck-card-icon { font-size: 3rem; margin-bottom: 12px; display: block; }
+
+  .duck-card h3 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800; font-size: 1.1rem;
+    color: var(--text); margin-bottom: 8px;
+  }
+  .duck-card p {
+    font-size: 0.88rem; line-height: 1.6;
+    color: var(--text-lt);
+  }
+  .duck-tag {
+    display: inline-block;
+    margin-top: 12px;
+    background: var(--yellow-lt);
+    border: 1px solid var(--yellow);
+    color: var(--text);
+    font-size: 0.75rem; font-weight: 600;
+    padding: 3px 10px; border-radius: 12px;
+  }
+
+  /* Habitat strip */
+  .habitat-strip {
+    background: linear-gradient(135deg, var(--blue-lt), var(--green-lt));
+    border-radius: 28px;
+    max-width: 1100px; margin: 3rem auto 0;
+    padding: 3rem 3rem;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 3rem; align-items: center;
+    border: 2px solid rgba(126,196,240,0.4);
+  }
+
+  .habitat-text h2 {
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.7rem; font-weight: 900;
+    color: var(--text); margin-bottom: 1rem;
+  }
+
+  .habitat-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .habitat-list li {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 0.95rem; color: var(--text-lt);
+  }
+  .habitat-list li::before {
+    content: '🌿'; font-size: 1.1rem; flex-shrink: 0;
+  }
+
+  .habitat-visual {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .h-card {
+    background: rgba(255,255,255,0.75);
+    border-radius: 18px; padding: 16px;
+    text-align: center; border: 1.5px solid rgba(255,255,255,0.9);
+    box-shadow: 0 4px 14px var(--shadow);
+  }
+  .h-card .icon { font-size: 2rem; margin-bottom: 6px; }
+  .h-card .label {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700; font-size: 0.82rem;
+    color: var(--text);
+  }
+
+  /* ═══════════════════════════════
+     FOOTER (нижняя часть)
+  ═══════════════════════════════ */
+  footer {
+    background: linear-gradient(160deg, #2D6A4F 0%, #1B4332 100%);
+    color: #A8D5B5;
+    padding: 4rem 2rem 2rem;
+    position: relative; overflow: hidden;
+  }
+  footer::before {
+    content: '';
+    position: absolute; top: -2px; left: 0; right: 0; height: 50px;
+    background: var(--white);
+    clip-path: ellipse(60% 100% at 50% 0%);
+  }
+
+  .footer-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+  }
+
+  .footer-brand .logo-ft {
+    font-family: 'Nunito', sans-serif;
+    font-size: 1.5rem; font-weight: 900;
+    color: var(--yellow);
+    margin-bottom: 0.8rem;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .footer-brand p { font-size: 0.88rem; line-height: 1.6; color: #85C4A0; }
+
+  .footer-col h4 {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800; color: #fff;
+    margin-bottom: 1rem; font-size: 0.95rem;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .footer-col a {
+    color: #85C4A0; text-decoration: none;
+    font-size: 0.88rem; transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--yellow); }
+
+  .footer-bottom {
+    max-width: 1100px; margin: 3rem auto 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-bottom p { font-size: 0.82rem; color: #5A9E7A; }
+
+  .duck-row-footer {
+    display: flex; gap: 10px; align-items: flex-end;
+  }
+
+  /* ═══════════════════════════════
+     DUCK DETAIL PAGE (overlay)
+  ═══════════════════════════════ */
+  .detail-overlay {
+    display: none;
+    position: fixed; inset: 0; z-index: 500;
+    background: rgba(60,100,70,0.45);
+    backdrop-filter: blur(6px);
+    overflow-y: auto;
+    padding: 2rem 1rem;
+    animation: fadeIn 0.25s ease;
+  }
+  .detail-overlay.active { display: flex; align-items: flex-start; justify-content: center; }
+
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+  .detail-page {
+    background: var(--white);
+    border-radius: 32px;
+    max-width: 860px; width: 100%;
+    overflow: hidden;
+    box-shadow: 0 24px 80px rgba(30,80,50,0.28);
+    animation: slideUp 0.35s cubic-bezier(.34,1.3,.64,1);
+    margin: auto;
+  }
+  @keyframes slideUp { from{transform:translateY(60px);opacity:0} to{transform:translateY(0);opacity:1} }
+
+  .detail-header {
+    background: linear-gradient(135deg, var(--blue-lt), var(--green-lt));
+    padding: 2rem 2.5rem 1.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 2px solid var(--green-lt);
+  }
+  .detail-back {
+    background: rgba(255,255,255,0.7);
+    border: 2px solid var(--green);
+    border-radius: 22px;
+    padding: 8px 18px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800; font-size: 0.9rem;
+    color: var(--text);
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .detail-back:hover { background: var(--green-lt); transform: translateX(-3px); }
+
+  .detail-title-block { text-align: center; flex: 1; }
+  .detail-title-block h1 {
+    font-family: 'Nunito', sans-serif;
+    font-size: 2rem; font-weight: 900;
+    color: var(--text);
+  }
+  .detail-title-block .detail-latin {
+    font-size: 0.88rem; color: var(--text-lt);
+    font-style: italic; margin-top: 3px;
+  }
+
+  .detail-body {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+
+  .detail-art {
+    background: linear-gradient(160deg, var(--yellow-lt) 0%, var(--blue-lt) 100%);
+    display: flex; align-items: center; justify-content: center;
+    min-height: 360px; padding: 2rem;
+    position: relative; overflow: hidden;
+  }
+  .detail-art::before {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 60px;
+    background: linear-gradient(to top, rgba(126,196,240,0.3), transparent);
+  }
+  .duck-art-svg { width: 100%; max-width: 280px; filter: drop-shadow(0 8px 24px rgba(0,100,80,0.2)); }
+
+  .detail-info { padding: 2.5rem 2.5rem 2rem; }
+
+  .detail-section { margin-bottom: 1.6rem; }
+  .detail-section-title {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800; font-size: 0.8rem;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--text-lt);
+    margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .detail-section-title::after {
+    content: ''; flex: 1; height: 1.5px;
+    background: var(--green-lt);
+  }
+  .detail-section p {
+    font-size: 0.92rem; line-height: 1.7;
+    color: var(--text);
+  }
+
+  .detail-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 8px; }
+  .detail-tag {
+    background: var(--green-lt);
+    border: 1.5px solid var(--green);
+    color: var(--text);
+    font-size: 0.8rem; font-weight: 600;
+    padding: 4px 12px; border-radius: 14px;
+  }
+  .detail-tag.blue { background: var(--blue-lt); border-color: var(--blue); }
+  .detail-tag.yellow { background: var(--yellow-lt); border-color: var(--yellow); }
+
+  .detail-loading {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    min-height: 360px; gap: 16px;
+    color: var(--text-lt);
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+  }
+  .loading-duck {
+    animation: wobble 0.7s ease-in-out infinite alternate;
+    font-size: 3rem;
+  }
+  @keyframes wobble { from{transform:rotate(-10deg) scale(0.95)} to{transform:rotate(10deg) scale(1.05)} }
+
+  .loading-dots::after {
+    content: '...';
+    animation: dots 1.2s steps(4,end) infinite;
+  }
+  @keyframes dots {
+    0%   { content: ''; }
+    25%  { content: '.'; }
+    50%  { content: '..'; }
+    75%  { content: '...'; }
+  }
+
+  .duck-card { cursor: pointer; }
+  .duck-card:hover .duck-card-icon { transform: scale(1.15) rotate(-5deg); transition: transform 0.25s; }
+  .duck-card .duck-card-icon { display: inline-block; transition: transform 0.25s; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .detail-body { grid-template-columns: 1fr; }
+    .detail-art { min-height: 260px; }
+  }
+
+  /* ─── original responsive ─── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .habitat-strip { grid-template-columns: 1fr; gap: 1.5rem; }
+    .footer-inner { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .footer-bottom { flex-direction: column; }
+  }
+  @media (max-width: 480px) {
+    .footer-inner { grid-template-columns: 1fr; }
+    .cards-grid { grid-template-columns: 1fr; }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════
+     HEADER
+═══════════════════════════════ -->
+<header>
+  <nav>
+    <a class="logo" href="#"><span>🐥</span>МирУтят</a>
+    <ul class="nav-links">
+
+      <li>
+        <!-- Duck peek SVG -->
+        <svg class="duck-peek" viewBox="0 0 60 55" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="30" cy="36" rx="22" ry="16" fill="#FFD95A"/>
+          <ellipse cx="30" cy="36" rx="22" ry="16" fill="#FFD95A"/>
+          <circle cx="30" cy="22" r="14" fill="#FFE566"/>
+          <ellipse cx="30" cy="22" rx="10" ry="9" fill="#FCEEA0"/>
+          <circle cx="25" cy="19" r="4" fill="white"/>
+          <circle cx="35" cy="19" r="4" fill="white"/>
+          <circle cx="26" cy="20" r="2.2" fill="#2D4A2D"/>
+          <circle cx="36" cy="20" r="2.2" fill="#2D4A2D"/>
+          <circle cx="27" cy="19" r="0.8" fill="white"/>
+          <circle cx="37" cy="19" r="0.8" fill="white"/>
+          <path d="M24 27 Q30 31 36 27" stroke="#E8C840" stroke-width="2" stroke-linecap="round" fill="none"/>
+          <path d="M22 25 Q30 29 38 25 L36 30 Q30 34 24 30 Z" fill="#FFB830"/>
+          <path d="M8 42 Q30 52 52 42" stroke="#FFB830" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <ellipse cx="14" cy="46" rx="6" ry="3" fill="#FFB830" opacity="0.7"/>
+          <ellipse cx="46" cy="46" rx="6" ry="3" fill="#FFB830" opacity="0.7"/>
+        </svg>
+        <a href="#hero">Главная</a>
+      </li>
+
+      <li>
+        <svg class="duck-peek" viewBox="0 0 60 55" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="30" cy="36" rx="22" ry="16" fill="#7EC4F0"/>
+          <circle cx="30" cy="22" r="14" fill="#A8D8F0"/>
+          <ellipse cx="30" cy="22" rx="10" ry="9" fill="#D6EFFF"/>
+          <circle cx="25" cy="19" r="4" fill="white"/>
+          <circle cx="35" cy="19" r="4" fill="white"/>
+          <circle cx="26" cy="20" r="2.2" fill="#1A3A5C"/>
+          <circle cx="36" cy="20" r="2.2" fill="#1A3A5C"/>
+          <circle cx="27" cy="19" r="0.8" fill="white"/>
+          <circle cx="37" cy="19" r="0.8" fill="white"/>
+          <path d="M22 25 Q30 29 38 25 L36 30 Q30 34 24 30 Z" fill="#FFB830"/>
+          <path d="M5 20 Q12 16 18 22" stroke="#5A8A6A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        </svg>
+        <a href="#species">Виды уток и среда обитания</a>
+      </li>
+
+      <li>
+        <svg class="duck-peek" viewBox="0 0 60 55" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="30" cy="36" rx="22" ry="16" fill="#8ED4A4"/>
+          <circle cx="30" cy="22" r="14" fill="#AADEC0"/>
+          <ellipse cx="30" cy="22" rx="10" ry="9" fill="#C8EDD6"/>
+          <circle cx="25" cy="19" r="4" fill="white"/>
+          <circle cx="35" cy="19" r="4" fill="white"/>
+          <circle cx="26" cy="20" r="2.2" fill="#2D4A2D"/>
+          <circle cx="36" cy="20" r="2.2" fill="#2D4A2D"/>
+          <circle cx="27" cy="19" r="0.8" fill="white"/>
+          <circle cx="37" cy="19" r="0.8" fill="white"/>
+          <path d="M22 25 Q30 29 38 25 L36 30 Q30 34 24 30 Z" fill="#FFB830"/>
+          <circle cx="30" cy="10" r="5" fill="#FFD95A"/>
+          <text x="27" y="14" font-size="7" fill="#4A6741">✿</text>
+        </svg>
+        <a href="#life">Жизнь утят</a>
+      </li>
+
+      <li>
+        <svg class="duck-peek" viewBox="0 0 60 55" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="30" cy="36" rx="22" ry="16" fill="#FFD95A"/>
+          <circle cx="30" cy="22" r="14" fill="#FFE566"/>
+          <ellipse cx="30" cy="22" rx="10" ry="9" fill="#FFF5B8"/>
+          <circle cx="25" cy="19" r="4" fill="white"/>
+          <circle cx="35" cy="19" r="4" fill="white"/>
+          <circle cx="26" cy="20" r="2.2" fill="#2D4A2D"/>
+          <circle cx="36" cy="20" r="2.2" fill="#2D4A2D"/>
+          <circle cx="27" cy="19" r="0.8" fill="white"/>
+          <circle cx="37" cy="19" r="0.8" fill="white"/>
+          <path d="M22 25 Q30 29 38 25 L36 30 Q30 34 24 30 Z" fill="#FFB830"/>
+          <path d="M42 15 Q50 8 52 18" stroke="#5A8A6A" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <circle cx="50" cy="10" r="3" fill="#8ED4A4"/>
+        </svg>
+        <a href="#care">Правильное воспитание и корм</a>
+      </li>
+
+    </ul>
+  </nav>
+</header>
+
+<!-- ═══════════════════════════════
+     HERO
+═══════════════════════════════ -->
+<section class="hero" id="hero">
+  <div class="clouds">
+    <div class="cloud c1"></div>
+    <div class="cloud c2"></div>
+    <div class="cloud c3"></div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-badge">🌿 Добро пожаловать в мир пернатых!</div>
+    <h1>Всё о жизни<em>маленьких утят</em></h1>
+    <p>Узнай, как живут, чем питаются и где обитают самые очаровательные птенцы водоёмов 🐥</p>
+    <div class="hero-btns">
+      <a href="#species" class="btn-primary">Изучить виды уток</a>
+      <a href="#life" class="btn-secondary">Жизнь утят →</a>
+    </div>
+  </div>
+
+  <!-- Lake scene SVG -->
+  <svg class="lake-scene" viewBox="0 0 1440 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <!-- Sky-water gradient -->
+    <defs>
+      <linearGradient id="lakeGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#7EC4F0" stop-opacity="0.6"/>
+        <stop offset="100%" stop-color="#B8DEFF" stop-opacity="0.9"/>
+      </linearGradient>
+      <linearGradient id="grassGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#8ED4A4"/>
+        <stop offset="100%" stop-color="#5A9E6A"/>
+      </linearGradient>
+    </defs>
+    <!-- Water -->
+    <ellipse cx="720" cy="160" rx="800" ry="90" fill="url(#lakeGrad)"/>
+    <!-- Ripples -->
+    <ellipse cx="400" cy="170" rx="80" ry="10" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+    <ellipse cx="900" cy="175" rx="60" ry="8" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/>
+    <ellipse cx="1100" cy="165" rx="50" ry="7" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+    <!-- Ground -->
+    <path d="M0 180 Q360 155 720 170 Q1080 185 1440 165 L1440 220 L0 220 Z" fill="url(#grassGrad)"/>
+    <!-- Reeds left -->
+    <line x1="120" y1="220" x2="118" y2="140" stroke="#5A9E6A" stroke-width="3"/>
+    <ellipse cx="118" cy="135" rx="7" ry="20" fill="#4A8A5A"/>
+    <line x1="140" y1="220" x2="142" y2="145" stroke="#5A9E6A" stroke-width="2.5"/>
+    <ellipse cx="142" cy="140" rx="5" ry="16" fill="#6AAE7A"/>
+    <line x1="100" y1="220" x2="98" y2="150" stroke="#5A9E6A" stroke-width="2"/>
+    <!-- Reeds right -->
+    <line x1="1300" y1="220" x2="1298" y2="145" stroke="#5A9E6A" stroke-width="3"/>
+    <ellipse cx="1298" cy="140" rx="7" ry="20" fill="#4A8A5A"/>
+    <line x1="1320" y1="220" x2="1322" y2="150" stroke="#5A9E6A" stroke-width="2.5"/>
+    <ellipse cx="1322" cy="145" rx="5" ry="16" fill="#6AAE7A"/>
+    <!-- Duck on water left -->
+    <g transform="translate(320, 158)">
+      <ellipse cx="0" cy="0" rx="24" ry="12" fill="#FFD95A"/>
+      <circle cx="-4" cy="-14" r="11" fill="#FFE566"/>
+      <path d="M2 -9 L10 -11 L8 -7 Z" fill="#FFB830"/>
+      <circle cx="-7" cy="-16" r="2.5" fill="white"/>
+      <circle cx="-6.5" cy="-15.5" r="1.2" fill="#2D4A2D"/>
+    </g>
+    <!-- Duck on water right -->
+    <g transform="translate(1050, 162)">
+      <ellipse cx="0" cy="0" rx="22" ry="11" fill="#7EC4F0"/>
+      <circle cx="-3" cy="-13" r="10" fill="#A8D8F0"/>
+      <path d="M2 -8 L10 -10 L8 -6 Z" fill="#FFB830"/>
+      <circle cx="-6" cy="-15" r="2.5" fill="white"/>
+      <circle cx="-5.5" cy="-14.5" r="1.2" fill="#1A3A5C"/>
+    </g>
+    <!-- Small duck center -->
+    <g transform="translate(650, 165)">
+      <ellipse cx="0" cy="0" rx="15" ry="8" fill="#FFD95A"/>
+      <circle cx="-2" cy="-9" r="7" fill="#FFE566"/>
+      <path d="M1 -5 L7 -7 L6 -4 Z" fill="#FFB830"/>
+      <circle cx="-4" cy="-10" r="1.8" fill="white"/>
+      <circle cx="-3.8" cy="-9.8" r="0.9" fill="#2D4A2D"/>
+    </g>
+    <!-- Lily pads -->
+    <ellipse cx="500" cy="172" rx="20" ry="8" fill="#8ED4A4" opacity="0.7"/>
+    <ellipse cx="800" cy="175" rx="16" ry="6" fill="#8ED4A4" opacity="0.6"/>
+    <circle cx="500" cy="169" r="4" fill="#FFB3C6" opacity="0.8"/>
+    <circle cx="800" cy="172" r="3" fill="#FFD95A" opacity="0.8"/>
+  </svg>
+
+  <!-- Floating decorative ducklings above lake -->
+  <div class="floating-ducks" style="bottom:140px">
+    <svg class="mini-duck" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="25" cy="34" rx="18" ry="11" fill="#FFD95A"/>
+      <circle cx="22" cy="20" r="12" fill="#FFE566"/>
+      <path d="M27 23 L36 21 L34 26 Z" fill="#FFB830"/>
+      <circle cx="18" cy="18" r="3.5" fill="white"/>
+      <circle cx="18.5" cy="18.5" r="1.8" fill="#2D4A2D"/>
+      <circle cx="19" cy="18" r="0.7" fill="white"/>
+    </svg>
+    <svg class="mini-duck" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="25" cy="34" rx="16" ry="10" fill="#A8D8F0"/>
+      <circle cx="23" cy="20" r="11" fill="#C8E8F8"/>
+      <path d="M28 23 L36 21 L34 26 Z" fill="#FFB830"/>
+      <circle cx="19" cy="18" r="3" fill="white"/>
+      <circle cx="19.5" cy="18.5" r="1.5" fill="#1A3A5C"/>
+      <circle cx="20" cy="18" r="0.6" fill="white"/>
+      <circle cx="22" cy="10" r="5" fill="#FFD95A"/>
+    </svg>
+    <svg class="mini-duck" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="25" cy="34" rx="19" ry="12" fill="#8ED4A4"/>
+      <circle cx="22" cy="20" r="13" fill="#AADEC0"/>
+      <path d="M27 23 L36 21 L34 26 Z" fill="#FFB830"/>
+      <circle cx="18" cy="18" r="3.5" fill="white"/>
+      <circle cx="18.5" cy="18.5" r="1.8" fill="#2D4A2D"/>
+      <circle cx="19" cy="18" r="0.7" fill="white"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════
+     MIDDLE — Species
+═══════════════════════════════ -->
+<section class="section-middle" id="species">
+  <h2 class="section-title">🦆 Виды уток и их описание</h2>
+  <p class="section-sub">Познакомьтесь с удивительными видами <span>🌊</span></p>
+
+  <div class="cards-grid">
+
+    <div class="duck-card" onclick="openDuckPage('mallard')">
+      <span class="duck-card-icon">🦆</span>
+      <h3>Кряква обыкновенная</h3>
+      <p>Самая узнаваемая утка. Самец — с ярко-зелёной головой и фиолетовым зеркальцем на крыле. Живёт почти на любых водоёмах от парков до лесных озёр.</p>
+      <span class="duck-tag">Реки · Озёра · Парки</span>
+    </div>
+
+    <div class="duck-card" onclick="openDuckPage('teal')">
+      <span class="duck-card-icon">🐦</span>
+      <h3>Чирок-свистунок</h3>
+      <p>Маленькая и юркая утка. Взлетает почти вертикально! Любит небольшие мелководные водоёмы с обилием водной растительности и укромными зарослями.</p>
+      <span class="duck-tag">Болота · Ручьи · Пруды</span>
+    </div>
+
+    <div class="duck-card" onclick="openDuckPage('pochard')">
+      <span class="duck-card-icon">🌊</span>
+      <h3>Нырковая утка</h3>
+      <p>Мастер подводной охоты — ныряет на глубину до 4 метров! Предпочитает открытые водоёмы с чистой водой. Взлетает с разбегом по воде.</p>
+      <span class="duck-tag">Глубокие озёра · Реки</span>
+    </div>
+
+    <div class="duck-card" onclick="openDuckPage('torrent')">
+      <span class="duck-card-icon">🏔️</span>
+      <h3>Горная утка</h3>
+      <p>Обитает у горных рек с быстрым течением. Отлично держится на порогах и перекатах. Гнездится в расщелинах скал и у каменистых берегов.</p>
+      <span class="duck-tag">Горные реки · Водопады</span>
+    </div>
+
+    <div class="duck-card" onclick="openDuckPage('shoveler')">
+      <span class="duck-card-icon">🌿</span>
+      <h3>Широконоска</h3>
+      <p>Узнаётся по необычно широкому лопатообразному клюву — идеален для фильтрации воды. Любит заросшие мелкие озёра и болота с богатой кормовой базой.</p>
+      <span class="duck-tag">Болота · Мелководья</span>
+    </div>
+
+    <div class="duck-card" onclick="openDuckPage('mandarin')">
+      <span class="duck-card-icon">🌸</span>
+      <h3>Мандаринка</h3>
+      <p>Самая красочная утка мира! Родом из Восточной Азии. В отличие от других уток гнездится в дуплах деревьев. Утята прыгают из дупла и сразу плывут к маме.</p>
+      <span class="duck-tag">Лесные озёра · Дупла</span>
+    </div>
+
+  </div>
+
+  <!-- Habitat strip -->
+  <div class="habitat-strip" id="life">
+    <div class="habitat-text">
+      <h2>🌱 Жизнь утят — первые дни</h2>
+      <ul class="habitat-list">
+        <li>Утята вылупляются покрытые пухом и уже через несколько часов умеют плавать</li>
+        <li>Мама-утка постоянно зовёт птенцов особым «квакающим» звуком</li>
+        <li>Утята следуют за мамой гуськом — это называется импринтинг</li>
+        <li>За первые 2 недели утята учатся искать корм самостоятельно</li>
+        <li>К 8 неделям у утят вырастают настоящие перья, и они готовы к полёту</li>
+        <li>В дикой природе утята подвергаются опасности от хищных птиц и рыб</li>
+      </ul>
+    </div>
+    <div class="habitat-visual">
+      <div class="h-card">
+        <div class="icon">🥚</div>
+        <div class="label">Инкубация<br><small style="color:#7A9E74;font-size:0.75rem">26–28 дней</small></div>
+      </div>
+      <div class="h-card">
+        <div class="icon">🐥</div>
+        <div class="label">Вылупление<br><small style="color:#7A9E74;font-size:0.75rem">1–й день</small></div>
+      </div>
+      <div class="h-card">
+        <div class="icon">🏊</div>
+        <div class="label">Первое плавание<br><small style="color:#7A9E74;font-size:0.75rem">2–й день</small></div>
+      </div>
+      <div class="h-card">
+        <div class="icon">🦆</div>
+        <div class="label">Взрослое перо<br><small style="color:#7A9E74;font-size:0.75rem">8–я неделя</small></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Care block -->
+  <div id="care" style="max-width:1100px;margin:3rem auto 0;background:linear-gradient(135deg,#FFF5B8,#FFF9E0);border-radius:28px;padding:3rem;border:2px solid #FFD95A;">
+    <h2 style="font-family:'Nunito',sans-serif;font-size:1.7rem;font-weight:900;color:#4A6741;margin-bottom:1.5rem;">🌻 Правильное воспитание и корм</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;">
+      <div style="background:rgba(255,255,255,0.7);border-radius:18px;padding:20px;border:1.5px solid #FFD95A;">
+        <div style="font-size:2rem;margin-bottom:10px;">🌾</div>
+        <h4 style="font-family:'Nunito',sans-serif;font-weight:800;color:#4A6741;margin-bottom:8px;">Корм для утят</h4>
+        <p style="font-size:0.85rem;color:#7A9E74;line-height:1.6;">Стартовый комбикорм с белком 20–22%, мелко нарезанная зелень, ряска, личинки насекомых. Первые дни — только влажная крошка.</p>
+      </div>
+      <div style="background:rgba(255,255,255,0.7);border-radius:18px;padding:20px;border:1.5px solid #8ED4A4;">
+        <div style="font-size:2rem;margin-bottom:10px;">💧</div>
+        <h4 style="font-family:'Nunito',sans-serif;font-weight:800;color:#4A6741;margin-bottom:8px;">Вода и купание</h4>
+        <p style="font-size:0.85rem;color:#7A9E74;line-height:1.6;">Свежая вода всегда в доступе. Поилка должна быть достаточно глубокой — утята промывают клюв. Купание допустимо с 3-й недели под надзором.</p>
+      </div>
+      <div style="background:rgba(255,255,255,0.7);border-radius:18px;padding:20px;border:1.5px solid #B8DEFF;">
+        <div style="font-size:2rem;margin-bottom:10px;">☀️</div>
+        <h4 style="font-family:'Nunito',sans-serif;font-weight:800;color:#4A6741;margin-bottom:8px;">Тепло и свет</h4>
+        <p style="font-size:0.85rem;color:#7A9E74;line-height:1.6;">Первые 2 недели — температура под брудером +30°С. Каждую неделю снижают на 5°С. Световой день — 16 часов для здорового роста.</p>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════
+     FOOTER
+═══════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo-ft">🐥 МирУтят</div>
+      <p>Сайт о жизни, видах и воспитании уток и утят. Сделан с любовью для всех, кто восхищается этими удивительными птицами 🌿</p>
+    </div>
+    <div class="footer-col">
+      <h4>Разделы</h4>
+      <ul>
+        <li><a href="#hero">Главная</a></li>
+        <li><a href="#species">Виды уток</a></li>
+        <li><a href="#life">Жизнь утят</a></li>
+        <li><a href="#care">Корм и уход</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Среда обитания</h4>
+      <ul>
+        <li><a href="#">Реки и озёра</a></li>
+        <li><a href="#">Болота</a></li>
+        <li><a href="#">Горные реки</a></li>
+        <li><a href="#">Лесные водоёмы</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Интересно</h4>
+      <ul>
+        <li><a href="#">Факты об утках</a></li>
+        <li><a href="#">Миграции</a></li>
+        <li><a href="#">Пение уток</a></li>
+        <li><a href="#">Фотогалерея</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 МирУтят · Создано с 💛 для любителей природы</p>
+    <div class="duck-row-footer">
+      <svg width="36" height="36" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="25" cy="34" rx="16" ry="10" fill="#FFD95A"/>
+        <circle cx="23" cy="20" r="11" fill="#FFE566"/>
+        <path d="M27 23 L35 21 L33 26 Z" fill="#FFB830"/>
+        <circle cx="19" cy="18" r="3" fill="white"/>
+        <circle cx="19.5" cy="18.5" r="1.5" fill="#2D4A2D"/>
+      </svg>
+      <svg width="28" height="28" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="25" cy="34" rx="14" ry="9" fill="#A8D8F0"/>
+        <circle cx="23" cy="21" r="10" fill="#C8E8F8"/>
+        <path d="M27 24 L34 22 L32 27 Z" fill="#FFB830"/>
+        <circle cx="19" cy="19" r="2.8" fill="white"/>
+        <circle cx="19.5" cy="19.5" r="1.4" fill="#1A3A5C"/>
+      </svg>
+      <svg width="32" height="32" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="25" cy="34" rx="15" ry="9" fill="#8ED4A4"/>
+        <circle cx="23" cy="20" r="10" fill="#AADEC0"/>
+        <path d="M27 23 L35 21 L33 26 Z" fill="#FFB830"/>
+        <circle cx="19" cy="18" r="3" fill="white"/>
+        <circle cx="19.5" cy="18.5" r="1.5" fill="#2D4A2D"/>
+      </svg>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════════════════════
+     DUCK DETAIL OVERLAY
+═══════════════════════════════ -->
+<div class="detail-overlay" id="detailOverlay">
+  <div class="detail-page" id="detailPage">
+    <div class="detail-header">
+      <button class="detail-back" onclick="closeDuckPage()">← Назад</button>
+      <div class="detail-title-block">
+        <h1 id="detailName">Загрузка...</h1>
+        <div class="detail-latin" id="detailLatin"></div>
+      </div>
+      <div style="width:90px"></div>
+    </div>
+    <div class="detail-body">
+      <div class="detail-art" id="detailArt">
+        <div class="detail-loading" id="artLoading">
+          <div class="loading-duck">🎨</div>
+          <div>Рисую портрет<span class="loading-dots"></span></div>
+        </div>
+      </div>
+      <div class="detail-info" id="detailInfo">
+        <div class="detail-loading">
+          <div class="loading-duck">🦆</div>
+          <div>Собираю информацию<span class="loading-dots"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const DUCK_DATA = {
+  mallard: {
+    name: 'Кряква обыкновенная',
+    latin: 'Anas platyrhynchos',
+    accentColor: '#3A8C5C',
+    bodyColor: '#4A8050',
+    headColor: '#1A5C30',
+    wingColor: '#7EC4A0',
+    bellyColor: '#C8DCC0',
+    beakColor: '#FFB830',
+    eyeColor: '#1A1A1A',
+    features: 'У самца — изумрудно-зелёная голова с белым кольцом, коричневая грудь и сине-фиолетовое зеркальце на крыле. Самка скромнее — коричневая с пятнами. Клюв широкий, лопатообразный.',
+    habitat: 'Повсеместно в Евразии и Северной Америке. Реки, озёра, пруды в парках городов, болота, поймы рек. Зимует у незамерзающих водоёмов или мигрирует на юг.',
+    food: 'Всеядны: водные растения, семена, ряска, насекомые, черви, мелкая рыба, лягушки. Любят нырять вверх дном — «опрокидывание» за едой.',
+    fact: 'Самая многочисленная утка в мире! Именно от кряквы произошли почти все домашние породы уток. Кряканье издаёт только самка.'
+  },
+  teal: {
+    name: 'Чирок-свистунок',
+    latin: 'Anas crecca',
+    accentColor: '#3A6A8C',
+    bodyColor: '#6A9AAE',
+    headColor: '#2A4A6A',
+    wingColor: '#8ED4A4',
+    bellyColor: '#D0E8F0',
+    beakColor: '#555',
+    eyeColor: '#1A1A1A',
+    features: 'Самая маленькая речная утка: длина всего 34–38 см. Самец — с каштановой головой и зелёной полосой через глаз. Крылья украшены ярко-зелёным зеркальцем. Взлетает почти вертикально, как птица.',
+    habitat: 'Лесные пруды, болота, небольшие речки с медленным течением и густой растительностью. Гнездится в Северной Евразии, зимует в Южной Азии и Африке.',
+    food: 'Семена водных и болотных растений, мелкие водные беспозвоночные, личинки насекомых, ряска. Кормится на мелководье, процеживая воду клювом.',
+    fact: 'Один из самых быстрых уток в полёте — может лететь со скоростью до 80 км/ч! Голос самца — тонкий свист, а не кряканье.'
+  },
+  pochard: {
+    name: 'Нырковая утка (хохлатая чернеть)',
+    latin: 'Aythya fuligula',
+    accentColor: '#2A2A5A',
+    bodyColor: '#3A3A7A',
+    headColor: '#1A1A3A',
+    wingColor: '#FFFFFF',
+    bellyColor: '#EEEEEE',
+    beakColor: '#7A9ABE',
+    eyeColor: '#FFD700',
+    features: 'Компактная утка с характерным хохолком на голове у самца. Тело чёрное, бока белоснежные. Глаза ярко-жёлтые — одна из самых узнаваемых черт. Ноги сдвинуты к хвосту — идеально для ныряния.',
+    habitat: 'Глубокие озёра, водохранилища, медленные реки. Зимует на незамерзающих озёрах и морских заливах. Широко распространена в Евразии.',
+    food: 'Ныряет за едой на глубину 2–4 метра. Питается моллюсками, ракообразными, водными насекомыми, мелкой рыбой, водными растениями.',
+    fact: 'Ноги расположены так далеко к хвосту, что на суше ходит с трудом — зато под водой это превращается в суперспособность! Гнездится часто рядом с чайками для защиты.'
+  },
+  torrent: {
+    name: 'Горная утка',
+    latin: 'Mergus merganser',
+    accentColor: '#7A4A2A',
+    bodyColor: '#8A5A3A',
+    headColor: '#3A2A1A',
+    wingColor: '#DDDDDD',
+    bellyColor: '#FFF0E0',
+    beakColor: '#CC4444',
+    eyeColor: '#CC2222',
+    features: 'Крупная стройная утка с узким зубчатым клювом-«пилой» — идеален для захвата скользкой рыбы. Голова у самца тёмно-зелёная с металлическим блеском, тело белое с розоватым отливом.',
+    habitat: 'Быстрые горные и лесные реки с чистой холодной водой. Зимует на незамерзающих реках и морских побережьях. Встречается по всей северной Евразии.',
+    food: 'Почти исключительно рыбоед: плотва, форель, пескарь, налим. Преследует рыбу под водой с открытыми глазами, гребя лапами и крыльями.',
+    fact: 'Гнездится в дуплах деревьев, нишах скал и даже в заброшенных домах! Утята покидают гнездо в первые дни жизни, прыгая вниз с высоты до 10 метров.'
+  },
+  shoveler: {
+    name: 'Широконоска',
+    latin: 'Spatula clypeata',
+    accentColor: '#2A6A3A',
+    bodyColor: '#3A7A4A',
+    headColor: '#1A4A2A',
+    wingColor: '#8ED4A4',
+    bellyColor: '#C84A3A',
+    beakColor: '#2A4A2A',
+    eyeColor: '#FFD700',
+    features: 'Главная черта — огромный лопатообразный клюв, расширяющийся к концу. Внутри — пластинки-фильтры, как у кита. Самец: зелёная голова, белая грудь, рыжие бока. Самка пятнисто-бурая.',
+    habitat: 'Мелководные озёра и болота с богатой водной растительностью. Гнездится в степях и лесостепях Евразии и Северной Америки. Зимует в тропиках.',
+    food: 'Фильтратор: зачёрпывает воду и процеживает мелких рачков, водоросли, семена, личинок. Часто кормится, описывая круги — создаёт водоворот для поднятия пищи.',
+    fact: 'У широконоски самый длинный клюв относительно размеров тела среди всех уток! Пластинки в клюве фильтруют частицы размером менее 0,5 мм.'
+  },
+  mandarin: {
+    name: 'Утка-мандаринка',
+    latin: 'Aix galericulata',
+    accentColor: '#8A3A6A',
+    bodyColor: '#A04A6A',
+    headColor: '#2A1A5A',
+    wingColor: '#FF8C00',
+    bellyColor: '#FFF0D0',
+    beakColor: '#FF4444',
+    eyeColor: '#FF6600',
+    features: 'Самая красивая утка в мире! Самец — мозаика цветов: фиолетовая грудь, рыжие «бакенбарды», оранжевые «паруса» из перьев на крыльях, сине-зелёный хохолок. Напоминает живую картину.',
+    habitat: 'Лесные озёра и речки в тенистых лесах Восточной Азии (Китай, Япония, Корея). Интродуцирована в Европу. Зимует в южном Китае.',
+    food: 'Желуди, орехи, семена, насекомые, улитки, мелкая рыба и лягушки. Осенью специально ищет желудовые дубравы — жёлуди главный корм.',
+    fact: 'В японской и китайской культуре — символ верности и счастливого брака! Гнездится в дуплах на высоте до 10 м. Птенцы прыгают вниз в первый день жизни — без вреда!'
+  }
+};
+
+const artCache = {};
+
+function openDuckPage(id) {
+  const duck = DUCK_DATA[id];
+  document.getElementById('detailName').textContent = duck.name;
+  document.getElementById('detailLatin').textContent = duck.latin;
+
+  // Reset panels
+  document.getElementById('detailArt').innerHTML = `
+    <div class="detail-loading" id="artLoading">
+      <div class="loading-duck">🎨</div>
+      <div>Рисую аниме-портрет<span class="loading-dots"></span></div>
+    </div>`;
+  document.getElementById('detailInfo').innerHTML = buildInfo(duck);
+
+  document.getElementById('detailOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+
+  if (artCache[id]) {
+    document.getElementById('detailArt').innerHTML = artCache[id];
+    return;
+  }
+
+  generateAnimeArt(id, duck);
+}
+
+function buildInfo(duck) {
+  return `
+    <div class="detail-section">
+      <div class="detail-section-title">🌍 Где встречается</div>
+      <p>${duck.habitat}</p>
+    </div>
+    <div class="detail-section">
+      <div class="detail-section-title">🌾 Что ест</div>
+      <p>${duck.food}</p>
+    </div>
+    <div class="detail-section">
+      <div class="detail-section-title">✨ Отличительные черты</div>
+      <p>${duck.features}</p>
+    </div>
+    <div class="detail-section">
+      <div class="detail-section-title">🐥 Интересный факт</div>
+      <div style="background:var(--yellow-lt);border:1.5px solid var(--yellow);border-radius:14px;padding:12px 16px;font-size:0.9rem;line-height:1.6;">${duck.fact}</div>
+    </div>
+  `;
+}
+
+async function generateAnimeArt(id, duck) {
+  try {
+    const prompt = `Create an anime-style SVG illustration of a ${duck.name} duck (${duck.latin}). 
+Requirements:
+- Pure SVG code only, viewBox="0 0 300 300", no external images
+- Cute anime/chibi style with big sparkly eyes
+- The duck should have accurate colors: body ${duck.bodyColor}, head ${duck.headColor}, wings ${duck.wingColor}, belly ${duck.bellyColor}, beak ${duck.beakColor}
+- Add decorative elements: water ripples, lily pads, small flowers, sparkles
+- Soft pastel background: sky gradient from #D6EFFF to #C8EDD6
+- Make the duck look adorable and friendly, facing slightly to the right
+- Add anime-style shine/highlight circles on the eyes
+- Include small decorative stars or sparkles around the duck
+- The duck should be centered and fill most of the viewBox
+- Use only SVG shapes (circle, ellipse, path, rect, line, polygon)
+Return ONLY the SVG code starting with <svg and ending with </svg>, nothing else.`;
+
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+
+    const data = await response.json();
+    const text = data.content.map(b => b.text || '').join('');
+    const svgMatch = text.match(/<svg[\s\S]*<\/svg>/);
+
+    if (svgMatch) {
+      const svgHtml = `<div style="width:100%;padding:1rem;display:flex;align-items:center;justify-content:center">
+        ${svgMatch[0].replace('<svg', '<svg class="duck-art-svg"')}
+      </div>`;
+      artCache[id] = svgHtml;
+      const artEl = document.getElementById('detailArt');
+      if (artEl) artEl.innerHTML = svgHtml;
+    } else {
+      fallbackArt(id, duck);
+    }
+  } catch(e) {
+    fallbackArt(id, duck);
+  }
+}
+
+function fallbackArt(id, duck) {
+  // Handcrafted anime duck SVG as fallback
+  const svg = `<svg class="duck-art-svg" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="skyFb${id}" cx="50%" cy="30%">
+        <stop offset="0%" stop-color="#D6EFFF"/>
+        <stop offset="100%" stop-color="#C8EDD6"/>
+      </radialGradient>
+    </defs>
+    <rect width="300" height="300" fill="url(#skyFb${id})" rx="20"/>
+    <!-- Water -->
+    <ellipse cx="150" cy="240" rx="120" ry="40" fill="#7EC4F0" opacity="0.5"/>
+    <ellipse cx="150" cy="238" rx="100" ry="28" fill="#B8DEFF" opacity="0.6"/>
+    <!-- Ripples -->
+    <ellipse cx="120" cy="252" rx="25" ry="6" fill="none" stroke="white" stroke-width="1.5" opacity="0.6"/>
+    <ellipse cx="190" cy="255" rx="18" ry="5" fill="none" stroke="white" stroke-width="1.2" opacity="0.5"/>
+    <!-- Body -->
+    <ellipse cx="155" cy="210" rx="65" ry="42" fill="${duck.bodyColor}"/>
+    <ellipse cx="155" cy="215" rx="48" ry="28" fill="${duck.bellyColor}" opacity="0.8"/>
+    <!-- Wing highlight -->
+    <ellipse cx="185" cy="205" rx="32" ry="22" fill="${duck.wingColor}" opacity="0.7"/>
+    <path d="M165 190 Q200 185 215 210 Q200 220 170 218 Z" fill="${duck.wingColor}" opacity="0.9"/>
+    <!-- Neck -->
+    <ellipse cx="130" cy="178" rx="22" ry="28" fill="${duck.bodyColor}"/>
+    <!-- Head -->
+    <circle cx="118" cy="145" r="45" fill="${duck.headColor}"/>
+    <!-- Face shine -->
+    <circle cx="118" cy="140" r="38" fill="${duck.headColor}" opacity="0.5"/>
+    <ellipse cx="104" cy="128" rx="16" ry="16" fill="white" opacity="0.9"/>
+    <!-- Big anime eye -->
+    <circle cx="104" cy="130" r="13" fill="white"/>
+    <circle cx="104" cy="130" r="10" fill="${duck.eyeColor === '#1A1A1A' ? '#2D6A8A' : duck.eyeColor}"/>
+    <circle cx="104" cy="130" r="6" fill="#1A1A2A"/>
+    <!-- Eye shines -->
+    <circle cx="99" cy="125" r="3.5" fill="white"/>
+    <circle cx="108" cy="133" r="1.8" fill="white" opacity="0.8"/>
+    <!-- Beak -->
+    <path d="M76 148 Q62 152 60 160 Q68 165 82 158 Z" fill="${duck.beakColor}"/>
+    <line x1="69" y1="154" x2="81" y2="151" stroke="${duck.accentColor}" stroke-width="1.5" opacity="0.5"/>
+    <!-- Blush -->
+    <ellipse cx="90" cy="150" rx="9" ry="6" fill="#FFB3C6" opacity="0.55"/>
+    <!-- Tail feathers -->
+    <path d="M210 200 Q230 185 228 210 Q220 220 205 215 Z" fill="${duck.headColor}" opacity="0.8"/>
+    <path d="M215 195 Q238 178 236 205 Q225 218 210 210 Z" fill="${duck.wingColor}" opacity="0.6"/>
+    <!-- Sparkles -->
+    <text x="48" y="80" font-size="18" opacity="0.8">✦</text>
+    <text x="230" y="70" font-size="14" opacity="0.7">✦</text>
+    <text x="250" y="120" font-size="10" opacity="0.6">✦</text>
+    <text x="30" y="160" font-size="12" opacity="0.5">✦</text>
+    <!-- Lily pad -->
+    <ellipse cx="80" cy="258" rx="20" ry="8" fill="#8ED4A4" opacity="0.8"/>
+    <circle cx="80" cy="255" r="5" fill="#FFB3C6" opacity="0.9"/>
+    <ellipse cx="230" cy="262" rx="16" ry="6" fill="#8ED4A4" opacity="0.7"/>
+  </svg>`;
+
+  const html = `<div style="width:100%;padding:1rem;display:flex;align-items:center;justify-content:center">${svg}</div>`;
+  artCache[id] = html;
+  const artEl = document.getElementById('detailArt');
+  if (artEl) artEl.innerHTML = html;
+}
+
+function closeDuckPage() {
+  document.getElementById('detailOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// Close on backdrop click
+document.getElementById('detailOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeDuckPage();
+});
+
+// Close on Escape
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDuckPage(); });
+</script>
+
+</body>
+</html>
